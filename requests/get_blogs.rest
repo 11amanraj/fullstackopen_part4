@@ -2,10 +2,10 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "Deadhouse Gates",
-    "author": "Steven Erickson",
-    "url": "www.malazan.com",
-    "likes": 15000
+    "title": "Game of Thrones",
+    "author": "GRR Martin",
+    "url": "www.asongoficeandfire.com",
+    "likes": 25000
 }
 
 ####
