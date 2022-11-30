@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 const dummy = (blogs) => {
   if(blogs) return 1
 }
@@ -28,8 +30,19 @@ const favoriteBlog = (blogs) => {
   })
 }
 
+const mostBlog = (blogs) => {
+  const [authors, number] = _.zip(...(_.toPairs(_.countBy(blogs, 'author'))))
+  const index = number.indexOf(Math.max(...number))
+  
+  return {
+    author: authors[index],
+    blogs: number[index]
+  }
+}
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlog
 }
