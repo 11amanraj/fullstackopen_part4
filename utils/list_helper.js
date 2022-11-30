@@ -40,9 +40,38 @@ const mostBlog = (blogs) => {
   }
 }
 
+const mostLikes = (blogs) => {
+  const newList = blogs.map(item => ({
+    author: item.author,
+    likes: item.likes
+  }))
+  const sortedList = _.groupBy(newList, 'author')
+  const authors = []
+  const likes = []
+  
+  _.forOwn(sortedList, (value, key) => {
+    authors.push(key)
+
+    if(value.length === 1) {
+      likes.push(value[0].likes)
+    } else {
+      likes.push(value.reduce((sum, item) => {
+        return sum + item.likes
+      }, 0))
+    }
+  })
+  
+  const index = likes.indexOf(Math.max(...likes))
+  return {
+    author: authors[index],
+    likes: likes[index]
+  }
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlog
+  mostBlog,
+  mostLikes
 }
