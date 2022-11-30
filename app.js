@@ -10,12 +10,12 @@ const middleware = require('./utils/middleware')
 logger.info('connecting to', config.MONGO_URL)
 
 mongoose.connect(config.MONGO_URL)
-    .then(() => {
-        logger.info('connected to MongoDB')
-    })
-    .catch((error) => {
-        logger.error('error connecting to MongoDB', error.message)
-    })
+  .then(() => {
+    logger.info('connected to MongoDB')
+  })
+  .catch((error) => {
+    logger.error('error connecting to MongoDB', error.message)
+  })
 
 app.use(cors())
 app.use(express.json())
