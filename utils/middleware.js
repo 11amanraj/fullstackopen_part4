@@ -13,7 +13,11 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message)
+  if (error === 'ValidationError') {
+    logger.error('username must be atleast 3 character long')
+  } else {
+    logger.error(error.message)
+  }
 
   next(error)
 }
