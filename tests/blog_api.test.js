@@ -28,7 +28,10 @@ test('Checks if id property exists', async () => {
   })
 })
 
-test('HTTP POST requests creates a new blog post', async () => { 
+test('HTTP POST requests creates a new blog post', async () => {
+  const res = await api.get('/api/blogs')
+  const intialLength = res.body.length
+
   const blog = {
     'title': 'Blood Rites',
     'author': 'Jim Butcher',
@@ -43,8 +46,28 @@ test('HTTP POST requests creates a new blog post', async () => {
     .expect('Content-Type', /application\/json/)
 
   const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(3)
-  expect(response.body[2]).toMatchObject(blog)
+  expect(response.body).toHaveLength(intialLength+1)
+  expect(response.body[intialLength]).toMatchObject(blog)
+})
+
+test('if likes property is missing in request returns 0', async () => {
+  const res = await api.get('/api/blogs')
+  const intialLength = res.body.length
+
+  const blog = {
+    'title': 'Changes',
+    'author': 'Jim Butcher',
+    'url': 'www.dresdenfiles.com',
+  }
+  
+  await api
+    .post('/api/blogs')
+    .send(blog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  expect(response.body[intialLength].likes).toBe(0)
 })
 
 afterAll(() => {
