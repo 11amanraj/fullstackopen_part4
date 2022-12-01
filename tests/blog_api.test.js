@@ -14,7 +14,7 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-describe('GET request', async () => {
+describe('GET request', () => {
   test('correct number of blogs are returned', async () => {
     const response = await api.get('/api/blogs')
   
@@ -22,7 +22,7 @@ describe('GET request', async () => {
   })
 })
 
-describe('Check Property', async () => {
+describe('Check Property', () => {
   test('Checks if id property exists', async () => {
     const response = await api.get('/api/blogs')
   
@@ -101,6 +101,26 @@ describe('DELETE request', () => {
 
     const response = await api.get('/api/blogs')
     expect(response.body.length).toBe(initialLength-1)
+  })
+})
+
+describe('PUT', () => {
+  test('update likes for first blog', async () => {
+    const res = await api.get('/api/blogs')
+    const blogToBeUpdated = res.body[0]
+
+    const blog = {
+      'likes': 5
+    } 
+    
+    await api
+      .put(`/api/blogs/${blogToBeUpdated.id}`)
+      .set('Content-Type', 'application/json')
+      .send(blog)
+      .expect(200)
+    
+    const response = await api.get('/api/blogs')
+    expect(response.body[0].likes).toBe(blog.likes)
   })
 })
 
