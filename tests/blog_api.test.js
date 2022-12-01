@@ -28,6 +28,25 @@ test('Checks if id property exists', async () => {
   })
 })
 
+test('HTTP POST requests creates a new blog post', async () => { 
+  const blog = {
+    'title': 'Blood Rites',
+    'author': 'Jim Butcher',
+    'url': 'www.dresdenfiles.com',
+    'likes': 15000
+  }  
+  
+  await api
+    .post('/api/blogs')
+    .send(blog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(3)
+  expect(response.body[2]).toMatchObject(blog)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
