@@ -20,6 +20,14 @@ test('correct number of blogs are returned', async () => {
   expect(response.body).toHaveLength(2)
 })
 
+test('Checks if id property exists', async () => {
+  const response = await api.get('/api/blogs')
+
+  response.body.forEach(blog => {
+    expect(blog.id).toBeDefined()
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
