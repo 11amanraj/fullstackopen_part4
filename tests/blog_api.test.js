@@ -14,21 +14,25 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-test('correct number of blogs are returned', async () => {
-  const response = await api.get('/api/blogs')
-
-  expect(response.body).toHaveLength(2)
-})
-
-test('Checks if id property exists', async () => {
-  const response = await api.get('/api/blogs')
-
-  response.body.forEach(blog => {
-    expect(blog.id).toBeDefined()
+describe('GET request', async () => {
+  test('correct number of blogs are returned', async () => {
+    const response = await api.get('/api/blogs')
+  
+    expect(response.body).toHaveLength(2)
   })
 })
 
-describe('POST request tests', () => {
+describe('Check Property', async () => {
+  test('Checks if id property exists', async () => {
+    const response = await api.get('/api/blogs')
+  
+    response.body.forEach(blog => {
+      expect(blog.id).toBeDefined()
+    })
+  })
+})
+
+describe('POST request', () => {
   test('HTTP POST requests creates a new blog post', async () => {
     const res = await api.get('/api/blogs')
     const intialLength = res.body.length
@@ -51,7 +55,7 @@ describe('POST request tests', () => {
     expect(response.body[intialLength]).toMatchObject(blog)
   })
   
-  test('if likes property is missing in request returns 0', async () => {
+  test('if likes property is missing returns provide default value of 0', async () => {
     const res = await api.get('/api/blogs')
     const intialLength = res.body.length
   
@@ -71,7 +75,7 @@ describe('POST request tests', () => {
     expect(response.body[intialLength].likes).toBe(0)
   })
   
-  test('if title or url property is missing in request returns error 400', async () => {
+  test('if title or url property is missing returns error 400', async () => {
     const blog = {
       'author': 'Jim Butcher',
       'likes': 15000
@@ -83,6 +87,21 @@ describe('POST request tests', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
   }, 10000)
+})
+
+describe('DELETE request', () => {
+  test('deleting a blog post', async () => {
+    const res = await api.get('/api/blogs')
+    const initialLength = res.body.length
+    const blogToBeDeleted = res.body[0]
+    
+    await api
+      .delete(`/api/blogs/${blogToBeDeleted.id}`)
+      .expect(204)
+
+    const response = await api.get('/api/blogs')
+    expect(response.body.length).toBe(initialLength-1)
+  })
 })
 
 afterAll(() => {
