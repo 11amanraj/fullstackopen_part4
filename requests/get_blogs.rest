@@ -2,10 +2,10 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "Game of Thrones",
-    "author": "GRR Martin",
-    "url": "www.asongoficeandfire.com",
-    "likes": 25000
+    "title": "Harry Potter",
+    "author": "JK Rowling",
+    "url": "www.harrypotter.com",
+    "likes": 50000
 }
 
 ####

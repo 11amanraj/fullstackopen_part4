@@ -19,8 +19,6 @@ const favoriteBlog = (blogs) => {
     (likes[i] === maxLikes) && index.push(i)
   }
 
-  console.log(index)
-
   return index.map(i => {
     return {
       title: blogs[i].title,
