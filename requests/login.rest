@@ -1,4 +1,4 @@
-POST http://localhost:3003/api/users
+POST http://localhost:3003/api/login
 content-type: application/json
 
 {
@@ -6,6 +6,3 @@ content-type: application/json
     "name": "Ash Ketchum",
     "password": "4everyung"
 }
-
-####
-GET http://localhost:3003/api/users
