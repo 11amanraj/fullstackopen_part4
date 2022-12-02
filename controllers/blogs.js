@@ -1,6 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-// const { userExtractor } = require('../utils/middleware')
+const { userExtractor } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
@@ -11,8 +11,8 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 //using userExtractor here instead of app.js allows to exclude GET route from token requirement
-// blogsRouter.post('/', userExtractor , async (request, response) => {
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', userExtractor , async (request, response) => {
+// blogsRouter.post('/', async (request, response) => {
   if(!request.body.title || !request.body.url) {
     return response.status(400).json({error: 'title and url are required'})
   } else if(!request.body.likes) {
@@ -36,7 +36,7 @@ blogsRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog) 
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', userExtractor , async (request, response) => {
   const user = request.user
   const blog = await Blog.findById(request.params.id)
 
@@ -51,7 +51,7 @@ blogsRouter.delete('/:id', async (request, response) => {
   }
 })
 
-blogsRouter.put('/:id', async (request, response) => {
+blogsRouter.put('/:id', userExtractor , async (request, response) => {
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, request.body)
   response.json(updatedBlog)
   response.status(200).end()
