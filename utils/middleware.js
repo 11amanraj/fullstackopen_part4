@@ -13,12 +13,17 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  if (error === 'ValidationError') {
-    logger.error('username must be atleast 3 character long')
-  } else {
-    logger.error(error.message)
+  if (error.name === 'ValidationError') {
+    return response.status(400).json({
+      error: 'username must be atleast 3 character long'
+    })
+  } else if (error.name === 'JsonWebTokenError') {
+    return response.status(401).json({
+      error: 'invalid token'
+    })
   }
-
+  
+  logger.error(error.message)
   next(error)
 }
 
