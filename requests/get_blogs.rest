@@ -2,9 +2,9 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "Harry Potter",
-    "author": "JK Rowling",
-    "url": "www.harrypotter.com",
+    "title": "Vision",
+    "author": "Tom King",
+    "url": "www.marvel.com",
     "likes": 50000
 }
 

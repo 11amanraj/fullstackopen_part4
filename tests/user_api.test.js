@@ -36,7 +36,7 @@ describe('POST', () => {
     expect(names).toContain('John Doe')
   })
 
-  test('if password have less than 3 characters then return 400 status code', async () => {
+  test('if password has less than 3 characters then return 400 status code', async () => {
     const newUser = {
       username: 'jinny',
       name: 'Jane Doe',
@@ -61,7 +61,7 @@ describe('POST', () => {
     expect(names).not.toContain('Jane Doe')  
   })
 
-  test('if username have less than 3 characters then return 400 status code', async () => {
+  test('if username has less than 3 characters then return 400 status code', async () => {
     const newUser = {
       username: 'ji',
       name: 'Jane Doe',
