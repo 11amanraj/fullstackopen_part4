@@ -24,10 +24,14 @@ app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
-// app.use(middleware.userExtractor)
 
 app.use('/api/users', usersRouter)
+
+//using middleware.userExtractor here means GET request requires token
 app.use('/api/blogs', middleware.userExtractor, blogsRouter)
+
+//using middleware.userExtractor in blogs controller means GET request can be remoed from token requirement
+// app.use('/api/blogs', blogsRouter)
 app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)

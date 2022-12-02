@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+// const { userExtractor } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
@@ -9,6 +10,8 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
+//using userExtractor here instead of app.js allows to exclude GET route from token requirement
+// blogsRouter.post('/', userExtractor , async (request, response) => {
 blogsRouter.post('/', async (request, response) => {
   if(!request.body.title || !request.body.url) {
     return response.status(400).json({error: 'title and url are required'})
@@ -44,7 +47,7 @@ blogsRouter.delete('/:id', async (request, response) => {
       .findByIdAndRemove(request.params.id)
     response.status(204).end()
   } else {
-    response.status(403).json({ error: 'unauthorized access'})
+    response.status(401).json({ error: 'unauthorized access'})
   }
 })
 
