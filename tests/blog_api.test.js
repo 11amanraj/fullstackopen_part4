@@ -51,7 +51,7 @@ describe('Check Property', () => {
 
 describe('POST request', () => {
   test('HTTP POST requests creates a new blog post', async () => {
-    const res = await api.get('/api/blogs').set({ Authorization: token })
+    const res = await api.get('/api/blogs').set({ authorization: token })
     const intialLength = res.body.length
   
     const blog = {
