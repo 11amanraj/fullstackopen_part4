@@ -2,10 +2,22 @@ POST http://localhost:3003/api/users
 content-type: application/json
 
 {
-    "username": "catchem",
-    "name": "Ash Ketchum",
-    "password": "4everyung"
+    "username": "007john",
+    "name": "John Doe",
+    "password": "casinoroyale"
 }
 
 ####
 GET http://localhost:3003/api/users
+
+# {
+#     "username": "catchem",
+#     "name": "Ash Ketchum",
+#     "password": "4everyung"
+# }
+
+# {
+#     "username": "007john",
+#     "name": "John Doe",
+#     "password": "casinoroyale"
+# }
